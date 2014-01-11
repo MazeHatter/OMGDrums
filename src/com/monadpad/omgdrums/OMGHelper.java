@@ -13,8 +13,8 @@ public class OMGHelper {
 
     private static String mSubmitUrl = "omg";
     //private static String mHomeUrl = "http://www.openmusicgallery.com";
-    private static String mHomeUrl = "http://10.0.2.2:8888/";
-    //private static String mHomeUrl = "http://openmusicgallery.appspot.com/";
+    //private static String mHomeUrl = "http://10.0.2.2:8888/";
+    private static String mHomeUrl = "http://openmusicgallery.appspot.com/";
 
     private Context mContext;
 

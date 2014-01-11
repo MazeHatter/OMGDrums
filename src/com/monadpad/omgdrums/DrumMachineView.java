@@ -193,14 +193,15 @@ public class DrumMachineView extends View {
     public void setCaptions() {
 
         captionWidths = new float[8][];
+        captions = new String[8][];
         String[] caps = mJam.getCaptions();
         String[] lines;
         for (int i = 0; i < caps.length; i++) {
 
-            lines = caps[i].split(" ");
-            captionWidths[i] = new float[lines.length];
-            for (int j = 0; j < lines.length; j++) {
-                captionWidths[i][j] = blackPaint.measureText(caps[j]) ;
+            captions[i] = caps[i].split(" ");
+            captionWidths[i] = new float[captions[i].length];
+            for (int j = 0; j < captions[i].length; j++) {
+                captionWidths[i][j] = blackPaint.measureText(captions[i][j]) ;
             }
 
         }

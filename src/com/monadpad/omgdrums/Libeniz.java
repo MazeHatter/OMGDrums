@@ -165,11 +165,31 @@ public class Libeniz {
         say(8000, "Now add the claps.", false, new Runnable() {
             @Override
             public void run() {
-                //step5();
+                step5();
             }
         });
     }
 
+    private void step5() {
+        say(4000, "Press me to change the beat", false, new Runnable() {
+            @Override
+            public void run() {
+                step6();
+            }
+        });
+
+    }
+
+    private void step6() {
+        say(4000, "Press the Banana to Save", false, new Runnable() {
+            @Override
+            public void run() {
+                showBanana();
+                mJam.finishDemo();
+            }
+        });
+
+    }
 
 
     public void say(final int length, final String text, final boolean delegateOnUIThread, final Runnable after) {
