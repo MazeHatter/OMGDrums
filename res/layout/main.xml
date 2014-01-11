@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:id="@+id/main_layout"
+        >
+
+    <RelativeLayout android:orientation="horizontal"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/status_line"
+                  >
+
+        <ImageView
+            android:src="@drawable/icon48"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+                android:id="@+id/libeniz_head"></ImageView>
+
+        <TextView
+                android:id="@+id/skip"
+                android:layout_width="wrap_content"
+                android:layout_height="48dip"
+                android:text="Skip >>"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                >
+<!--            android:padding="10dip"-->
+
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/auto_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Here's stuff"
+            android:layout_toRightOf="@id/libeniz_head"
+            android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:background="@drawable/statusbox"
+                android:padding="8dip"
+                android:textColor="#000000"
+                android:alpha="0"
+                >
+
+            </TextView>
+
+        <ImageView
+                android:id="@+id/main_banana"
+            android:alpha="0"
+            android:src="@drawable/banana48"
+            android:layout_width="wrap_content"
+            android:layout_height="48dip"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"/>
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/back"
+                    android:padding="5dip"
+                    android:layout_margin="5dip"
+                    android:id="@+id/song_controls">
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="48dip"
+                android:id="@+id/mute_button"
+                android:text="M"
+                android:textColor="#FFFFFFFF"
+                android:background="#FF00FF00"
+                />
+
+        <ImageButton android:layout_width="wrap_content"
+                android:layout_height="48dip"
+                android:id="@+id/rewind_button"
+                android:layout_toRightOf="@id/mute_button"
+                android:src="@drawable/rewind"
+                />
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="48dip"
+                android:id="@+id/kit_button"
+                android:text="kit"
+                android:textColor="#FFFFFFFF"
+                android:layout_toRightOf="@id/rewind_button"
+                />
+
+        <Button android:layout_width="98dip"
+                android:layout_height="48dip"
+                android:id="@+id/bpm_button"
+                android:text="BPM"
+                android:layout_alignParentRight="true"
+                />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/back"
+                    android:padding="5dip"
+                    android:layout_margin="5dip"
+                    android:id="@+id/drums">
+
+
+
+        <com.monadpad.omgdrums.DrumMachineView
+                android:layout_below="@id/mute_button"
+                android:layout_alignParentLeft="true"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/drum_machine"
+                />
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>
+
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OMG Drums</string>
+    <string name="hi_make_music">Let\'s make music!</string>
+    <string name="gettags">Descriptive hash tags</string>
+    <string name="tags_dialog_title">Add #tags</string>
+
+    <string name="tags_hint">List #tags here</string>
+    <string name="tags_explain">Add tags like \"funky\" or \"soothing\".
+
+        \n\n
+        Tags make it easier to mix and mash music on the Open Music Gallery (OMG)
+
+    </string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit_to_draw">Edit</string>
+    <string name="tap_tempo">Tap Tempo</string>
+
+    <string name="tempo_dialog_title">Set Tempo</string>
+</resources>

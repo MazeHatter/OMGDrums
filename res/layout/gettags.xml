@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <TextView android:layout_height="wrap_content" android:id="@+id/capSong" android:text="@string/tags_explain"
+              android:layout_width="wrap_content" />
+    <EditText android:layout_height="wrap_content" android:id="@+id/txt_tags" android:text=""
+              android:layout_width="fill_parent"
+              android:layout_below="@id/capSong"
+              android:hint="@string/tags_hint"
+              android:singleLine="true"
+              android:inputType="textCapWords"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:background="@android:drawable/bottom_bar"
+            android:paddingLeft="4.0dip"
+            android:paddingTop="5.0dip"
+            android:paddingRight="4.0dip"
+            android:paddingBottom="1.0dip"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:layout_below="@id/txt_tags">
+
+
+        <Button
+                android:id="@+id/why_button"
+                android:layout_width="0.0dip" android:layout_height="fill_parent"
+                android:text="@string/cancel"
+                android:layout_weight="1.0" />
+        <Button
+                android:id="@+id/ok_button"
+                android:layout_width="0.0dip" android:layout_height="fill_parent"
+                android:text="@string/ok"
+                android:layout_weight="1.0" />
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <TextView android:layout_height="wrap_content"
+              android:id="@+id/cap_bpm"
+              android:text="Beats Per Minute:"
+              android:layout_width="wrap_content"
+              android:layout_margin="12dip"
+              android:textSize="20sp"/>
+
+    <EditText android:layout_height="wrap_content" android:id="@+id/txt_bpm" android:text=""
+              android:layout_width="200dip"
+              android:layout_toRightOf="@id/cap_bpm"
+              android:singleLine="true"
+              android:inputType="textCapWords"
+              android:textSize="24sp"/>
+
+
+    <Button
+            android:id="@+id/tap_button"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:text="@string/tap_tempo"
+            android:padding="35dip"
+            android:layout_margin="35dip"
+            android:layout_below="@id/txt_bpm"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:background="@android:drawable/bottom_bar"
+            android:paddingLeft="4.0dip"
+            android:paddingTop="5.0dip"
+            android:paddingRight="4.0dip"
+            android:paddingBottom="1.0dip"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:layout_below="@id/tap_button">
+
+
+        <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="0.0dip" android:layout_height="fill_parent"
+                android:text="@string/cancel"
+                android:layout_weight="1.0" />
+        <Button
+                android:id="@+id/ok_button"
+                android:layout_width="0.0dip" android:layout_height="fill_parent"
+                android:text="@string/ok"
+                android:layout_weight="1.0" />
+
+    </LinearLayout>
+</RelativeLayout>
