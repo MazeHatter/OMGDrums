@@ -3,6 +3,7 @@ package com.monadpad.omgdrums;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.util.Log;
 
 import java.util.Random;
@@ -101,19 +102,21 @@ public class MonadJam {
     public void makeChannels() {
         //basslineChannel = dialpad.makeBasslineChannel();
 
-        pool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            int loadedSounds = 0;
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                loadedSounds++;
-                Log.d("MGH sound pool", Integer.toString(loadedSounds));
+        if (Build.VERSION.SDK_INT >= 11) {
+            pool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                int loadedSounds = 0;
+                @Override
+                public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                    loadedSounds++;
+                    Log.d("MGH sound pool", Integer.toString(loadedSounds));
 
-                if (loadedSounds == 70) {
-                    soundPoolLoaded = true;
-                    Log.d("MGH sound pool", "loaded");
+                    if (loadedSounds == 70) {
+                        soundPoolLoaded = true;
+                        Log.d("MGH sound pool", "loaded");
+                    }
                 }
-            }
-        });
+            });
+        }
         loadPool();
 
 

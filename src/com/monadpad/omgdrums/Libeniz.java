@@ -2,6 +2,8 @@ package com.monadpad.omgdrums;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -20,19 +22,9 @@ public class Libeniz {
     private Main mActivity;
     private TextView mStatusText;
 
-    private View mLibenizView;
-
     private MonadJam mJam;
 
-    private View mMainLayOut;
-
-    private View mSongControls;
-    private View mDrumControls;
-
     private DrumMachineView mDrumMachine;
-
-    private int topMargin;
-    private int height;
 
     private int step = 0;
 
@@ -43,14 +35,10 @@ public class Libeniz {
     public Libeniz(Main mainActivity, MonadJam jam) {
         mActivity = mainActivity;
         mStatusText = (TextView)mainActivity.findViewById(R.id.auto_status);
-        mLibenizView = mainActivity.findViewById(R.id.status_line);
+
         mJam = jam;
 
-        mMainLayOut = mainActivity.findViewById(R.id.main_layout);
-        mSongControls = mainActivity.findViewById(R.id.song_controls);
-        mDrumControls = mainActivity.findViewById(R.id.drums);
         mDrumMachine = (DrumMachineView)mainActivity.findViewById(R.id.drum_machine);
-
 
         letsMakeASong();
 
@@ -83,7 +71,7 @@ public class Libeniz {
             return;
         }
 
-        say(2000, "We need a drum beat.", true, new Runnable() {
+        say(2000, "Let's start with a kick drum.", true, new Runnable() {
             @Override
             public void run() {
 
@@ -91,7 +79,7 @@ public class Libeniz {
                 return;
             }
 
-            say(3000, "This is a hi hat.", false, new Runnable() {
+            say(3000, "On beats 1, 3, 5, and 7.", false, new Runnable() {
                 @Override
                 public void run() {
                     step2b();
@@ -100,11 +88,11 @@ public class Libeniz {
 
             step = 2;
 
-            mDrumMachine.handleFirstColumn(2);
-            mJam.makeHiHatBeats(true);
+            mJam.makeKickBeats(true);
+            mDrumMachine.handleFirstColumn(0);
             mJam.kickIt();
 
-            headbob = new HeadBob((ImageView)mLibenizView.findViewById(R.id.libeniz_head));
+            headbob = new HeadBob((ImageView)mActivity.findViewById(R.id.libeniz_head));
             headbob.start(500);
 
             }
@@ -117,7 +105,7 @@ public class Libeniz {
             return;
 
 
-        say(3400, "Press boxes to change the pattern.", false, new Runnable() {
+        say(3400, "Next the hand claps.", false, new Runnable() {
                 @Override
                 public void run() {
                     step3();
@@ -136,11 +124,10 @@ public class Libeniz {
 
         step = 3;
 
-        mJam.makeKickBeats(true);
+        mJam.makeClapBeats(true);
+        mDrumMachine.handleFirstColumn(1);
 
-        mDrumMachine.handleFirstColumn(0);
-
-        say(7000, "Let's add a kick drum", true, new Runnable() {
+        say(7000, "On beats 2, 4, and 6", true, new Runnable() {
             @Override
             public void run() {
                 step4();
@@ -158,11 +145,10 @@ public class Libeniz {
         }
 
         step = 4;
+        mDrumMachine.handleFirstColumn(2);
+        mJam.makeHiHatBeats(true);
 
-        mJam.makeClapBeats(true);
-
-        mDrumMachine.handleFirstColumn(1);
-        say(8000, "Now add the claps.", false, new Runnable() {
+        say(8000, "Here is the hi-hat", false, new Runnable() {
             @Override
             public void run() {
                 step5();
@@ -171,7 +157,7 @@ public class Libeniz {
     }
 
     private void step5() {
-        say(4000, "Press me to change the beat", false, new Runnable() {
+        say(4000, "Press me to change it up", false, new Runnable() {
             @Override
             public void run() {
                 step6();
@@ -181,10 +167,20 @@ public class Libeniz {
     }
 
     private void step6() {
+        showBanana();
         say(4000, "Press the Banana to Save", false, new Runnable() {
             @Override
             public void run() {
-                showBanana();
+                step7();
+            }
+        });
+
+    }
+
+    private void step7() {
+        say(4000, "Now its your turn!", false, new Runnable() {
+            @Override
+            public void run() {
                 mJam.finishDemo();
             }
         });
@@ -193,6 +189,59 @@ public class Libeniz {
 
 
     public void say(final int length, final String text, final boolean delegateOnUIThread, final Runnable after) {
+
+        if (Build.VERSION.SDK_INT < 11) {
+
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mStatusText.setText(text);
+
+                }
+            });
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    long started = System.currentTimeMillis();
+                    float pct;
+                    while (true) {
+                        pct = Math.min(1.0f, (System.currentTimeMillis() - started) / 300.0f);
+                        mStatusText.getBackground().setAlpha((int)(pct * 255));
+                        mStatusText.postInvalidate();
+                        //Log.d("MGH setting alph", Integer.toString((int)(pct * 255)));
+
+                        if (pct == 1.0f) {
+                            break;
+                        }
+                    }
+
+                    setTimeout(length, new Runnable() {
+                        @Override
+                        public void run() {
+                            long started = System.currentTimeMillis();
+                            float pct;
+                            while (true) {
+                                pct = 1.0f - Math.min(1.0f, (System.currentTimeMillis() - started) / 300.0f);
+                                mStatusText.getBackground().setAlpha((int) (pct * 255));
+                                mStatusText.postInvalidate();
+
+                                if (pct == 0.0f) {
+                                    break;
+                                }
+                            }
+                            if (after != null) {
+                                after.run();
+                            }
+
+                        }
+                    });
+                }
+            });
+            thread.start();
+            return;
+        }
+
 
         mActivity.runOnUiThread(new Runnable() {
             @Override
@@ -299,28 +348,22 @@ public class Libeniz {
     public void skip() {
         isSkipping = true;
 
-        if (step < 1) {
-            mActivity.fadePanel(mSongControls, true);
-            mActivity.fadePanel(mDrumControls, true);
-        }
-
         if (step < 2) {
-            mJam.makeHiHatBeats(true);
+            mJam.makeKickBeats(true);
             mJam.kickIt();
-            headbob = new HeadBob((ImageView)mLibenizView.findViewById(R.id.libeniz_head));
+            headbob = new HeadBob((ImageView)mActivity.findViewById(R.id.libeniz_head));
             headbob.start(500);
 
         }
 
         if (step < 3) {
-            mJam.makeKickBeats(true);
-
-        }
-
-        if (step < 4) {
             mJam.makeClapBeats(true);
         }
 
+        if (step < 4) {
+            mDrumMachine.handleFirstColumn(2);
+            mJam.makeHiHatBeats(true);
+        }
 
         showBanana();
         mJam.finishDemo();
@@ -328,13 +371,21 @@ public class Libeniz {
     }
 
     void showBanana() {
-        ImageView banana = (ImageView) mActivity.findViewById(R.id.main_banana);
+
+        //scrollUpBottomPanel();
+
+        final ImageView banana = (ImageView) mActivity.findViewById(R.id.main_banana);
         Animation turnin = AnimationUtils.loadAnimation(mActivity, R.anim.rotate);
         banana.startAnimation(turnin);
 
 
-        mActivity.fadePanel(banana, true);
-        mActivity.fadePanel(mActivity.findViewById(R.id.skip), false);
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mActivity.fadePanel(banana, true);
+                mActivity.fadePanel(mActivity.findViewById(R.id.skip), false);
+            }
+        });
 
 
 
@@ -346,4 +397,82 @@ public class Libeniz {
             headbob.start(mJam.getBeatLength());
 
     }
+
+    private void scrollUpBottomPanel() {
+
+        if (Build.VERSION.SDK_INT < 11) {
+            scrollUpBottomPanel2();
+            return;
+        }
+
+        mBottomPanel = mActivity.findViewById(R.id.bottom_panel);
+        currentHeight = mDrumMachine.getHeight();
+        finalHeight = currentHeight - mBottomPanel.getHeight() - 8;
+        diff = currentHeight - finalHeight;
+
+        ObjectAnimator anim = ObjectAnimator.ofFloat(Libeniz.this,
+                "drumMachineHeight", 1, 0);
+        anim.setDuration(300);
+        anim.start();
+
+
+    }
+
+    private View mBottomPanel;
+    private int currentHeight;
+    private int finalHeight;
+    private int diff;
+
+
+    public void setDrumMachineHeight(float pct) {
+        final ViewGroup.LayoutParams params = mDrumMachine.getLayoutParams();
+        params.height = (int)(finalHeight + pct * (float)diff);
+        mDrumMachine.setLayoutParams(params);
+        //mDrumMachine.invalidate();
+    }
+
+    private void scrollUpBottomPanel2() {
+
+
+        final View bottomPanel = mActivity.findViewById(R.id.bottom_panel);
+        final ViewGroup.LayoutParams params = mDrumMachine.getLayoutParams();
+        final int currentHeight = mDrumMachine.getHeight();
+        final int finalHeight = currentHeight - bottomPanel.getHeight() - 8;
+        final int diff = currentHeight - finalHeight;
+
+        final long started = System.currentTimeMillis();
+
+
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    float pct = (System.currentTimeMillis() - started) / 300.0f;
+                    pct = Math.min(1.0f, pct);
+                    params.height = (int)(finalHeight + (1.0f - pct) * (float)diff);
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDrumMachine.setLayoutParams(params);
+                            //mDrumMachine.invalidate();
+                        }
+                    });
+
+
+/*                    try {
+                        Thread.sleep(1000/30);
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+ */
+                    if (pct == 1.0f)
+                        break;
+                }
+
+            }
+        })).start();
+
+
+    }
+
 }

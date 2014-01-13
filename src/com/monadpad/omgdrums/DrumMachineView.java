@@ -81,7 +81,7 @@ public class DrumMachineView extends View {
 
         data = new boolean[32];
 
-        setBackgroundColor(Color.BLACK);
+//        setBackgroundColor(Color.BLACK);
     }
 
     public void onDraw(Canvas canvas) {
@@ -187,7 +187,7 @@ public class DrumMachineView extends View {
 
         firstRowButton = x;
 
-        invalidate();
+        postInvalidate();
     }
 
     public void setCaptions() {

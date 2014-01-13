@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">OMG Drums</string>
-    <string name="hi_make_music">Let\'s make music!</string>
+    <string name="hi_make_music">Let\'s make drum beats!</string>
     <string name="gettags">Descriptive hash tags</string>
     <string name="tags_dialog_title">Add #tags</string>
 

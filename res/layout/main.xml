@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:id="@+id/main_layout"
         >
 
-    <RelativeLayout android:orientation="horizontal"
+<!--    <RelativeLayout android:orientation="horizontal"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:id="@+id/status_line"
                   >
-
+    -->
         <ImageView
             android:src="@drawable/icon48"
             android:layout_height="wrap_content"
@@ -21,11 +21,11 @@
         <TextView
                 android:id="@+id/skip"
                 android:layout_width="wrap_content"
-                android:layout_height="48dip"
+                android:layout_height="wrap_content"
+                android:padding="14dip"
                 android:text="Skip >>"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:gravity="center_vertical"
+                android:layout_alignParentTop="true"
                 >
 <!--            android:padding="10dip"-->
 
@@ -44,6 +44,8 @@
                 android:padding="8dip"
                 android:textColor="#000000"
                 android:alpha="0"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="6dip"
                 >
 
             </TextView>
@@ -54,10 +56,11 @@
             android:src="@drawable/banana48"
             android:layout_width="wrap_content"
             android:layout_height="48dip"
-                android:layout_alignParentRight="true"
-                android:visibility="gone"/>
+            android:layout_alignParentRight="true"
+            android:visibility="invisible"
+               />
 
-    </RelativeLayout>
+    <!-- android:visibility="gone"  </RelativeLayout>-->
 
 
 
@@ -66,8 +69,10 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/back"
                     android:padding="5dip"
-                    android:layout_margin="5dip"
-                    android:id="@+id/song_controls">
+                    android:layout_margin="2dip"
+                    android:layout_marginTop="0dip"
+                    android:id="@+id/song_controls"
+                    android:layout_below="@id/main_banana">
 
         <Button android:layout_width="wrap_content"
                 android:layout_height="48dip"
@@ -75,6 +80,7 @@
                 android:text="M"
                 android:textColor="#FFFFFFFF"
                 android:background="#FF00FF00"
+                android:minWidth="48dip"
                 />
 
         <ImageButton android:layout_width="wrap_content"
@@ -90,6 +96,7 @@
                 android:text="kit"
                 android:textColor="#FFFFFFFF"
                 android:layout_toRightOf="@id/rewind_button"
+                android:minWidth="48dip"
                 />
 
         <Button android:layout_width="98dip"
@@ -102,13 +109,16 @@
     </RelativeLayout>
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/back"
                     android:padding="5dip"
-                    android:layout_margin="5dip"
-                    android:id="@+id/drums">
+                    android:layout_margin="2dip"
+                    android:id="@+id/drums"
+                    android:layout_below="@id/song_controls"
+                    >
 
 
 
@@ -120,11 +130,40 @@
                 android:id="@+id/drum_machine"
                 />
 
+    </FrameLayout>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/back"
+                    android:layout_below="@id/drums"
+                    android:padding="5dip"
+                    android:layout_margin="2dip"
+                    android:id="@+id/bottom_panel"
+
+            >
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saved"/>
+
+        <ImageButton android:layout_width="48dip"
+                     android:layout_height="48dip"
+                     android:src="@drawable/supericon100"
+                     android:layout_alignParentRight="true"
+                     android:id="@+id/sketchatune"/>
+
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="More:"
+                  android:layout_centerVertical="true"
+                  android:layout_toLeftOf="@id/sketchatune"/>
+
     </RelativeLayout>
 
 
 
-
-</LinearLayout>
+</RelativeLayout>
 
 

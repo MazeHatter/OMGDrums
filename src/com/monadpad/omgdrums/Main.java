@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
@@ -40,6 +42,8 @@ public class Main extends Activity {
     private boolean drumBananaClicked = false;
 
     private ImageView mainLibenizHead;
+
+    private boolean isLoaded = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,7 +96,7 @@ public class Main extends Activity {
         drumMachine = (DrumMachineView)findViewById(R.id.drum_machine);
         drumMachine.setJam(mJam);
 
-        drumControls = findViewById(R.id.drums);
+        //drumControls = findViewById(R.id.drums);
 
         drumMuteButton = (Button)findViewById(R.id.mute_button);
         drumMuteButton.setOnClickListener(new View.OnClickListener() {
@@ -132,20 +136,43 @@ public class Main extends Activity {
             }
         });
 
+        findViewById(R.id.sketchatune).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sketchatuneIntent = getPackageManager().
+                        getLaunchIntentForPackage("com.monadpad.sketchatune2");
+                sketchatuneIntent.putExtra("bpm", mJam.getBPM());
+                sketchatuneIntent.putExtra("caller", "com.monadpad.omgdrums");
+
+                startActivity(sketchatuneIntent);
+            }
+        });
+
+
     }
 
 
 
     @Override
-    public void onStop() {
+    public void onPause() {
         super.onStop();
-        mJam.finish();
+
+        if (isFinishing()) {
+            mJam.finish();
+        }
+
     }
 
     void fadePanel(final View v, final boolean turnOn) {
 
         if (turnOn)
             v.setVisibility(View.VISIBLE);
+
+        if (Build.VERSION.SDK_INT < 11) {
+            if (!turnOn)
+                v.setVisibility(View.GONE);
+            return;
+        }
 
         ObjectAnimator anim = ObjectAnimator.ofFloat(v,
                 "alpha", turnOn ? 0 : 1, turnOn ? 1 : 0);

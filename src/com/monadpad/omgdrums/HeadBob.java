@@ -1,6 +1,7 @@
 package com.monadpad.omgdrums;
 
 import android.animation.ObjectAnimator;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,11 @@ public class HeadBob {
         bobHeight = mView.getHeight() / 4;
         layoutParams = (ViewGroup.MarginLayoutParams)mView.getLayoutParams();
 
-        anim = ObjectAnimator.ofFloat(this, "headHeight", 0.0f, 1.0f);
-        anim.setRepeatCount(-1);
+        if (Build.VERSION.SDK_INT >= 11) {
+            anim = ObjectAnimator.ofFloat(this, "headHeight", 0.0f, 1.0f);
+            anim.setRepeatCount(-1);
+
+        }
 
     }
 
@@ -33,9 +37,10 @@ public class HeadBob {
     public void start(int beatMS) {
         Log.d("MGH", "headbob starting");
 
-        anim.setDuration(beatMS);
-        anim.start();
-
+        if (anim != null) {
+            anim.setDuration(beatMS);
+            anim.start();
+        }
     }
 
     public void setHeadHeight(float f) {
