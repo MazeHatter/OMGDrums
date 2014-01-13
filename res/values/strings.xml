@@ -18,4 +18,5 @@
     <string name="tap_tempo">Tap Tempo</string>
 
     <string name="tempo_dialog_title">Set Tempo</string>
+    <string name="kits_dialog_title">Choose a Drumkit</string>
 </resources>

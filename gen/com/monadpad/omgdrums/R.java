@@ -62,38 +62,41 @@ public final class R {
         public static final int triangle=0x7f020023;
     }
     public static final class id {
-        public static final int auto_status=0x7f090007;
-        public static final int banana=0x7f090012;
-        public static final int bottom_panel=0x7f090010;
-        public static final int bpm_button=0x7f09000d;
-        public static final int cancel_button=0x7f090019;
+        public static final int auto_status=0x7f09000a;
+        public static final int banana=0x7f090015;
+        public static final int bottom_panel=0x7f090013;
+        public static final int bpm_button=0x7f090010;
+        public static final int cancel_button=0x7f090006;
         public static final int capSong=0x7f090000;
-        public static final int cap_bpm=0x7f090016;
-        public static final int drum_machine=0x7f09000f;
-        public static final int drums=0x7f09000e;
-        public static final int kit_button=0x7f09000c;
-        public static final int libeniz_head=0x7f090005;
-        public static final int main_banana=0x7f090008;
-        public static final int main_layout=0x7f090004;
-        public static final int melody_view=0x7f090015;
-        public static final int mute_button=0x7f09000a;
+        public static final int cap_bpm=0x7f090019;
+        public static final int drum_machine=0x7f090012;
+        public static final int drums=0x7f090011;
+        public static final int hip_button=0x7f090004;
+        public static final int kit_button=0x7f09000f;
+        public static final int libeniz_head=0x7f090008;
+        public static final int main_banana=0x7f09000b;
+        public static final int main_layout=0x7f090007;
+        public static final int melody_view=0x7f090018;
+        public static final int mute_button=0x7f09000d;
         public static final int ok_button=0x7f090003;
-        public static final int rewind_button=0x7f09000b;
-        public static final int sketchatune=0x7f090011;
-        public static final int skip=0x7f090006;
-        public static final int song_controls=0x7f090009;
-        public static final int tap_button=0x7f090018;
-        public static final int triangle=0x7f090013;
-        public static final int txt_bpm=0x7f090017;
-        public static final int txt_name=0x7f090014;
+        public static final int rewind_button=0x7f09000e;
+        public static final int rock_button=0x7f090005;
+        public static final int sketchatune=0x7f090014;
+        public static final int skip=0x7f090009;
+        public static final int song_controls=0x7f09000c;
+        public static final int tap_button=0x7f09001b;
+        public static final int triangle=0x7f090016;
+        public static final int txt_bpm=0x7f09001a;
+        public static final int txt_name=0x7f090017;
         public static final int txt_tags=0x7f090001;
         public static final int why_button=0x7f090002;
     }
     public static final class layout {
         public static final int gettags=0x7f030000;
-        public static final int main=0x7f030001;
-        public static final int mixer_panel=0x7f030002;
-        public static final int tempo=0x7f030003;
+        public static final int kits=0x7f030001;
+        public static final int main=0x7f030002;
+        public static final int mixer_panel=0x7f030003;
+        public static final int tempo=0x7f030004;
     }
     public static final class menu {
         public static final int kits=0x7f080000;
@@ -117,6 +120,7 @@ public final class R {
         public static final int edit_to_draw=0x7f070008;
         public static final int gettags=0x7f070002;
         public static final int hi_make_music=0x7f070001;
+        public static final int kits_dialog_title=0x7f07000b;
         public static final int ok=0x7f070006;
         public static final int tags_dialog_title=0x7f070003;
         public static final int tags_explain=0x7f070005;

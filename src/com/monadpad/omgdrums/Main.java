@@ -8,11 +8,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.*;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class Main extends Activity {
 
@@ -32,6 +37,7 @@ public class Main extends Activity {
 
     private final static int DIALOG_TAGS = 11;
     private final static int DIALOG_TEMPO = 22;
+    private final static int DIALOG_KITS = 33;
 
     private OMGHelper omgHelper;
 
@@ -121,7 +127,7 @@ public class Main extends Activity {
         findViewById(R.id.kit_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popup = new PopupMenu(Main.this, findViewById(R.id.kit_button));
+/*                PopupMenu popup = new PopupMenu(Main.this, findViewById(R.id.kit_button));
                 popup.inflate(R.menu.kits);
                 popup.show();
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -133,6 +139,8 @@ public class Main extends Activity {
                         return true;
                     }
                 });
+            */
+                showDialog(DIALOG_KITS);
             }
         });
 
@@ -252,6 +260,9 @@ public class Main extends Activity {
         else if (dialog == DIALOG_TEMPO) {
 
             return tempoDialog();
+        }
+        else if (dialog == DIALOG_KITS) {
+            return kitsDialog();
         }
         return null;
     }
@@ -410,6 +421,42 @@ public class Main extends Activity {
 //                    omgHelper.submitWithTags(tags);
             }
         });
+        return dl;
+
+
+    }
+
+    private Dialog kitsDialog() {
+
+        final Dialog dl = new Dialog(this);
+        dl.setTitle(getString(R.string.kits_dialog_title));
+        dl.setContentView(R.layout.kits);
+
+        dl.findViewById(R.id.hip_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mJam.setDrumset(0);
+                drumMachine.setCaptions();
+                removeDialog(DIALOG_KITS);
+
+            }
+        });
+        dl.findViewById(R.id.rock_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mJam.setDrumset(1);
+                drumMachine.setCaptions();
+                removeDialog(DIALOG_KITS);
+
+            }
+        });
+
+        dl.findViewById(R.id.cancel_button).setOnClickListener( new View.OnClickListener() {
+            public void onClick(View v) {
+                removeDialog(DIALOG_KITS);
+            }
+        });
+
         return dl;
 
 
