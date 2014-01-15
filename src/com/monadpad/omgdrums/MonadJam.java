@@ -62,15 +62,25 @@ public class MonadJam {
             false, false, false, false,
             false, false, false, false,
     };
-    private boolean[] default_hithat = new boolean[] {
+    private boolean[] default_hihat = new boolean[] {
             true, false, false, false,
             true, false, false, false,
             true, false, false, false,
-            true, false, true, false,
+            true, false, false, false,
             true, false, false, false,
             true, false, false, false,
             true, false, false, false,
             true, true, true, true,
+    };
+    private boolean[] default_hihat2 = new boolean[] {
+            false, false, true,  false,
+            false, false, true,  false,
+            false, false, true,  false,
+            false, false, true,  false,
+            false, false, true,  false,
+            false, false, true,  false,
+            false, false, false, false,
+            false, false, false, false,
     };
 
     private boolean[][] pattern = new boolean[8][subbeats * beats];
@@ -89,6 +99,8 @@ public class MonadJam {
     private boolean shouldRewind = false;
 
     private String[] captions;
+
+    private long started = 0;
 
     public MonadJam(Context context) {
 
@@ -179,12 +191,20 @@ public class MonadJam {
         return drumsEnabled;
     }
 
+    public void mute() {
+        drumsEnabled = false;
+    }
+
+    public void unmute() {
+        drumsEnabled = true;
+    }
+
     public void makeHiHatBeats(boolean defaultPattern) {
 
         boolean[] hihat = pattern[2];
         if (defaultPattern) {
             for (int i = 0; i < hihat.length; i++) {
-                hihat[i] = default_hithat[i];
+                hihat[i] = default_hihat[i];
             }
             return;
         }
@@ -199,6 +219,28 @@ public class MonadJam {
                         rand.nextBoolean() || rand.nextBoolean();
         }
     }
+
+    public void makeHiHat2Beats(boolean defaultPattern) {
+
+        boolean[] hihat = pattern[3];
+        if (defaultPattern) {
+            for (int i = 0; i < hihat.length; i++) {
+                hihat[i] = default_hihat2[i];
+            }
+            return;
+        }
+
+        int pattern = rand.nextInt(5);
+
+//        hihat = new boolean[beats * subbeats];
+        for (int i = 0; i < hihat.length; i++) {
+            hihat[i] = pattern == 0 ?  i % subbeats == 0 :
+                    pattern == 1 ? i % 2 == 0 :
+                            pattern == 2 ? rand.nextBoolean() :
+                                    rand.nextBoolean() || rand.nextBoolean();
+        }
+    }
+
 
     public void makeKickBeats(boolean defaultPattern) {
 
@@ -259,30 +301,29 @@ public class MonadJam {
 
             onNewLoop();
 
-            long lastBeatPlayed = 0;
             long now;
-            long timeSinceLast;
+            long nowInLoop;
 
             i = 0;
+
+            started = System.currentTimeMillis();
 
             while (!cancel) {
 
                 now = System.currentTimeMillis();
 
                 if (shouldRewind) {
-                    timeSinceLast = subbeatLength;
+                    nowInLoop = subbeatLength;
                     i = 0;
                     shouldRewind = false;
                 }
                 else {
-                    timeSinceLast = now - lastBeatPlayed;
+                    nowInLoop = now - started;
                 }
 
-                if (timeSinceLast < subbeatLength) {
+                if (nowInLoop < i * subbeatLength) {
                     continue;
                 }
-
-                lastBeatPlayed = now;
 
                 playBeatSampler(i);
 
@@ -290,6 +331,7 @@ public class MonadJam {
 
                 if (i == beats * subbeats) {
                     i = 0;
+                    started += subbeatLength * subbeats * beats;
                     onNewLoop();
                 }
 
@@ -366,6 +408,10 @@ public class MonadJam {
 
     public int getBPM() {
         return 60000 / (subbeatLength * subbeats);
+    }
+
+    public void setBPM(float bpm) {
+        subbeatLength = (int)(60000 / bpm / subbeats);
     }
 
     public int getBeatLength() {
@@ -486,4 +532,7 @@ public class MonadJam {
         return captions;
     }
 
+    public long getStarted() {
+        return started;
+    }
 }

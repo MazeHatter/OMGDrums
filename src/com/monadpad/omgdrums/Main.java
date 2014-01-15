@@ -4,7 +4,10 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -66,9 +69,20 @@ public class Main extends Activity {
 
         setContentView(R.layout.main);
 
+        drumMachine = (DrumMachineView)findViewById(R.id.drum_machine);
+        drumMachine.setJam(mJam);
 
         libeniz = new Libeniz(this, mJam);
-        //libeniz.letsMakeASong();
+
+        Intent intent = getIntent();
+        if (intent.hasExtra("bpm")) {
+
+            libeniz.skip();
+
+        }
+        else {
+            libeniz.letsMakeASong();
+        }
 
         findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,8 +113,6 @@ public class Main extends Activity {
 
         setupMainBanana();
 
-        drumMachine = (DrumMachineView)findViewById(R.id.drum_machine);
-        drumMachine.setJam(mJam);
 
         //drumControls = findViewById(R.id.drums);
 
@@ -117,7 +129,8 @@ public class Main extends Activity {
             @Override
             public void onClick(View view) {
                 if (mJam.isDrumsMuted()) {
-                    drumMuteButton.callOnClick();
+                    mJam.unmute();
+                    drumMuteButton.setBackgroundColor(Color.GREEN);
 
                 }
                 mJam.rewind();
@@ -149,13 +162,25 @@ public class Main extends Activity {
             public void onClick(View view) {
                 Intent sketchatuneIntent = getPackageManager().
                         getLaunchIntentForPackage("com.monadpad.sketchatune2");
-                sketchatuneIntent.putExtra("bpm", mJam.getBPM());
-                sketchatuneIntent.putExtra("caller", "com.monadpad.omgdrums");
+                if (sketchatuneIntent != null) {
+                    sketchatuneIntent.putExtra("bpm", mJam.getBPM());
+                    sketchatuneIntent.putExtra("started", mJam.getStarted());
+                    sketchatuneIntent.putExtra("caller", "com.monadpad.omgdrums");
 
-                startActivity(sketchatuneIntent);
+                    startActivity(sketchatuneIntent);
+                }
+                else {
+                    startActivity(new Intent(Main.this, GetSketchaTuneActivity.class));
+                }
+
             }
         });
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.androidinstrument.drum.SETBPMEXTERNAL");
+        filter.addAction("com.androidinstrument.drum.STARTPLAYBACK");
+        filter.addAction("com.androidinstrument.drum.STOPPLAYBACK");
+        registerReceiver(androidInstrumentBroadCastReceiver, filter);
 
     }
 
@@ -163,7 +188,7 @@ public class Main extends Activity {
 
     @Override
     public void onPause() {
-        super.onStop();
+        super.onPause();
 
         if (isFinishing()) {
             mJam.finish();
@@ -221,10 +246,10 @@ public class Main extends Activity {
 
 
     void updatePanel() {
-        //if (drumMachineVisible) {
+        if (drumMachine != null) {
             drumMachine.postInvalidate();
             return;
-        //}
+        }
     }
 
 
@@ -461,5 +486,34 @@ public class Main extends Activity {
 
 
     }
+
+    private BroadcastReceiver androidInstrumentBroadCastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String s = intent.getAction();
+
+            if (s.contains("SETBPMEXTERNAL")) {
+                mJam.setBPM(intent.getFloatExtra("bpmval", 120));
+                updateTempo();
+
+            }
+
+            else if (s.contains("STARTPLAYBACK")) {
+                mJam.unmute();
+                drumMuteButton.setBackgroundColor(Color.GREEN );
+
+            }
+
+            else if (s.contains("STOPPLAYBACK")) {
+                mJam.mute();
+                drumMuteButton.setBackgroundColor(Color.RED );
+
+
+            }
+
+        }
+    };
 
 }

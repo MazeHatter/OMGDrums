@@ -40,7 +40,7 @@ public class Libeniz {
 
         mDrumMachine = (DrumMachineView)mainActivity.findViewById(R.id.drum_machine);
 
-        letsMakeASong();
+        mJam.makeChannels();
 
     }
 
@@ -54,14 +54,12 @@ public class Libeniz {
 
                         if (mJam.isPoolLoaded()) {
                             step2();
-                        }
-                        else {
+                        } else {
                             say(3000, "Actually, I'm still loading sounds.", false, null);
                         }
                     }
 
                 });
-        mJam.makeChannels();
     }
 
 
@@ -157,6 +155,28 @@ public class Libeniz {
     }
 
     private void step5() {
+        if (isSkipping)
+            return;
+
+        step = 5;
+        mDrumMachine.handleFirstColumn(3);
+        mJam.makeHiHat2Beats(true);
+
+        say(8000, "Here is the open hi-hat", false, new Runnable() {
+            @Override
+            public void run() {
+                step6();
+            }
+        });
+
+    }
+
+
+
+    private void step5b() {
+        if (isSkipping) {
+            return;
+        }
         say(4000, "Press me to change it up", false, new Runnable() {
             @Override
             public void run() {
@@ -167,6 +187,10 @@ public class Libeniz {
     }
 
     private void step6() {
+        if (isSkipping) {
+            return;
+        }
+        step = 6;
         showBanana();
         say(4000, "Press the Banana to Save", false, new Runnable() {
             @Override
@@ -178,6 +202,9 @@ public class Libeniz {
     }
 
     private void step7() {
+        if (isSkipping) {
+            return;
+        }
         say(4000, "Now its your turn!", false, new Runnable() {
             @Override
             public void run() {
@@ -361,18 +388,26 @@ public class Libeniz {
         }
 
         if (step < 4) {
-            mDrumMachine.handleFirstColumn(2);
+            //mDrumMachine.handleFirstColumn(2);
             mJam.makeHiHatBeats(true);
         }
 
-        showBanana();
+        if (step < 5) {
+            mDrumMachine.handleFirstColumn(3);
+            mJam.makeHiHat2Beats(true);
+        }
+
+        if (step < 6) {
+            showBanana();
+        }
+
         mJam.finishDemo();
 
     }
 
     void showBanana() {
 
-        //scrollUpBottomPanel();
+        scrollUpBottomPanel();
 
         final ImageView banana = (ImageView) mActivity.findViewById(R.id.main_banana);
         Animation turnin = AnimationUtils.loadAnimation(mActivity, R.anim.rotate);
@@ -387,8 +422,6 @@ public class Libeniz {
             }
         });
 
-
-
     }
 
     public void newHeadBobTempo() {
@@ -400,15 +433,38 @@ public class Libeniz {
 
     private void scrollUpBottomPanel() {
 
+        mBottomPanel = mActivity.findViewById(R.id.bottom_panel);
+        currentHeight = mDrumMachine.getHeight();
+        finalHeight = currentHeight - mBottomPanel.getHeight() - 8;
+        diff = currentHeight - finalHeight;
+
+        Log.d("MGH drumheight", Integer.toString(mDrumMachine.getHeight()));
+
+        if (mDrumMachine.getHeight() == 0) {
+            mDrumMachine.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+
+                    currentHeight = mDrumMachine.getHeight();
+                    finalHeight = currentHeight - mBottomPanel.getHeight() - 8;
+
+                    ViewGroup.LayoutParams params = mDrumMachine.getLayoutParams();
+                    params.height = finalHeight;
+                    mDrumMachine.setLayoutParams(params);
+
+                    mDrumMachine.getViewTreeObserver().removeOnPreDrawListener(this);
+                    return true;
+                }
+            });
+            return;
+        }
+
+
         if (Build.VERSION.SDK_INT < 11) {
             scrollUpBottomPanel2();
             return;
         }
 
-        mBottomPanel = mActivity.findViewById(R.id.bottom_panel);
-        currentHeight = mDrumMachine.getHeight();
-        finalHeight = currentHeight - mBottomPanel.getHeight() - 8;
-        diff = currentHeight - finalHeight;
 
         ObjectAnimator anim = ObjectAnimator.ofFloat(Libeniz.this,
                 "drumMachineHeight", 1, 0);

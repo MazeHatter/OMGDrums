@@ -2,7 +2,6 @@ package com.monadpad.omgdrums;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -108,6 +107,12 @@ public class DrumMachineView extends View {
         canvas.drawRect(0, 0,
                 boxWidth, height,
                 topPanelPaint);
+
+        if (mJam.isDrumsMuted())
+            paintBeat.setARGB(255, 255, 0, 0);
+        else
+            paintBeat.setARGB(255, 0, 255, 0);
+
 
         boolean on;
 
