@@ -531,4 +531,8 @@ public class Libeniz {
 
     }
 
+    public void finish() {
+        if (headbob != null)
+            headbob.finish();
+    }
 }

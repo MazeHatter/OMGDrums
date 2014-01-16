@@ -42,6 +42,9 @@ public class Main extends Activity {
 
     private ImageView mainLibenizHead;
 
+    private boolean mIsVisible = false;
+
+    private boolean turnedHeadBobOff = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -208,6 +211,16 @@ public class Main extends Activity {
     @Override
     public void onPause() {
         super.onPause();
+
+        mIsVisible = false;
+
+        if (mJam.isDrumsMuted())
+            mJam.mute(); // this provides user interaction
+                        // otherwise it'll shut off
+
+
+        libeniz.finish();
+        turnedHeadBobOff = true;
 
         if (isFinishing()) {
             mJam.finish();
@@ -524,5 +537,27 @@ public class Main extends Activity {
         //try {
             unregisterReceiver(androidInstrumentBroadCastReceiver);
         //} catch (Exception e) {};
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mIsVisible = true;
+
+        if (mJam.isDrumsMuted()) {
+            mJam.mute(); // this provides user interaction
+                         // otherwise it'll shut off
+            mJam.resume();
+        }
+
+        if (turnedHeadBobOff) {
+            updateTempo();
+            turnedHeadBobOff = false;
+        }
+    }
+
+    public boolean isVisible() {
+        return mIsVisible;
     }
 }

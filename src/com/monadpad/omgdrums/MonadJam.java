@@ -105,6 +105,8 @@ public class MonadJam {
 
     private long started = 0;
 
+    private long mutedTime = 0;
+
     public MonadJam(Context context) {
 
         mContext = context;
@@ -190,12 +192,16 @@ public class MonadJam {
 
     public boolean toggleMuteDrums() {
         drumsEnabled = !drumsEnabled;
+        if (!drumsEnabled) {
+            mutedTime = System.currentTimeMillis();
+        }
 
         return drumsEnabled;
     }
 
     public void mute() {
         drumsEnabled = false;
+        mutedTime = System.currentTimeMillis();
     }
 
     public void unmute() {
@@ -348,12 +354,10 @@ public class MonadJam {
 
                 mActivity.updatePanel();
 
-                /*try {
-                    Thread.sleep(subbeatLength);
+                if (!drumsEnabled && System.currentTimeMillis() - mutedTime > 30000
+                        && !mActivity.isVisible()) {
+                    cancel = true;
                 }
-                catch (InterruptedException e) {
-                    break;
-                } */
 
             }
 
@@ -402,7 +406,7 @@ public class MonadJam {
 
         playbackThread.i = 0;
 
-        drumsEnabled = true;
+        unmute();
     }
 
 
@@ -593,4 +597,17 @@ public class MonadJam {
         return good;
     }
 
+    public void resume() {
+        if (cancel ) {
+
+            started = 0;
+            cancel = false;
+
+            playbackThread = new PlaybackThread();
+            playbackThread.start();
+
+            playing = true;
+
+        }
+    }
 }

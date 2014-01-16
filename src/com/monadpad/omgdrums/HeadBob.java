@@ -26,8 +26,6 @@ public class HeadBob {
 
         if (Build.VERSION.SDK_INT >= 11) {
             anim = ObjectAnimator.ofFloat(this, "headHeight", 0.0f, 1.0f);
-            anim.setRepeatCount(-1);
-
         }
 
     }
@@ -38,6 +36,7 @@ public class HeadBob {
         Log.d("MGH", "headbob starting");
 
         if (anim != null) {
+            anim.setRepeatCount(-1);
             anim.setDuration(beatMS);
             anim.start();
         }
@@ -61,4 +60,9 @@ public class HeadBob {
 
     }
 
+    public void finish() {
+        if (Build.VERSION.SDK_INT >= 11) {
+            anim.setRepeatCount(0);
+        }
+    }
 }
