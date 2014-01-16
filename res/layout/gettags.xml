@@ -10,7 +10,7 @@
               android:layout_below="@id/capSong"
               android:hint="@string/tags_hint"
               android:singleLine="true"
-              android:inputType="textCapWords"/>
+              />
 
     <LinearLayout
             android:orientation="horizontal"

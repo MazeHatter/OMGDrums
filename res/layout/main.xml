@@ -145,7 +145,8 @@
             >
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Saved"/>
+                android:text="Saved"
+                android:id="@+id/saved_button"/>
 
         <ImageButton android:layout_width="48dip"
                      android:layout_height="48dip"
@@ -156,7 +157,7 @@
 
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="More:"
+                  android:text="Melody:"
                   android:layout_centerVertical="true"
                   android:layout_toLeftOf="@id/sketchatune"/>
 

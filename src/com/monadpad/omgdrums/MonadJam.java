@@ -5,6 +5,9 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.util.Log;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Random;
 
@@ -306,7 +309,15 @@ public class MonadJam {
 
             i = 0;
 
-            started = System.currentTimeMillis();
+            if (started == 0) {
+                started = System.currentTimeMillis();
+            }
+            else {
+                now = System.currentTimeMillis();
+                nowInLoop = now - started;
+                i = (int)Math.ceil(nowInLoop / (double)subbeatLength);
+                i = i % (beats * subbeats);
+            }
 
             while (!cancel) {
 
@@ -346,8 +357,10 @@ public class MonadJam {
 
             }
 
+            started = 0;
 
         }
+
 
 
     }
@@ -435,14 +448,18 @@ public class MonadJam {
 
     public void getDrumBeatData(StringBuilder sb) {
         int totalBeats = beats * subbeats;
-        sb.append("{\"type\" : \"DRUMBEAT\", \"data\": [");
+        sb.append("{\"type\" : \"DRUMBEAT\", \"bpm\" : ");
+        sb.append(getBPM());
+        sb.append(", \"kit\": ");
+        sb.append(drumset);
+        sb.append(", \"data\": [");
 
         for (int p = 0; p < pattern.length; p++) {
             sb.append("{\"name\": \"");
             sb.append(captions[p]);
             sb.append("\", \"sound\": \"PRESET_HH_KICK\", \"data\": [");
             for (int i = 0; i < totalBeats; i++) {
-                sb.append(getKick()[i] ?1:0) ;
+                sb.append(pattern[p][i] ?1:0) ;
                 if (i < totalBeats - 1)
                     sb.append(",");
             }
@@ -535,4 +552,45 @@ public class MonadJam {
     public long getStarted() {
         return started;
     }
+
+    public void setStarted(long start) {
+        started = start;
+    }
+
+    public boolean loadData(String data) {
+        Log.d("MGH loadData", data);
+
+        boolean good = false;
+        try {
+            JSONObject jsonData = new JSONObject(data);
+
+            if (jsonData.has("bpm")) {
+                setBPM((float) jsonData.getDouble("bpm"));
+            }
+
+            if (jsonData.has("kit")) {
+                drumset = jsonData.getInt("kit");
+            }
+
+            JSONArray channels = jsonData.getJSONArray("data");
+            JSONObject channel;
+            JSONArray channelData;
+            for (int i = 0; i < Math.min(channels.length(), pattern.length); i++) {
+                channel = channels.getJSONObject(i);
+                channelData = channel.getJSONArray("data");
+
+                for (int j = 0; j < Math.min(channelData.length(), pattern[i].length); j++) {
+                    pattern[i][j] = channelData.getInt(j) == 1;
+                }
+
+            }
+            good = true;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return good;
+    }
+
 }

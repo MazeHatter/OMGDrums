@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -17,26 +18,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 
 public class Main extends Activity {
 
     MonadJam mJam;
 
-    View drumControls;
-
     DrumMachineView drumMachine;
 
-    private boolean drumMachineVisible = false;
 
     private Libeniz libeniz;
-
-    private int collapsedPanelHeight = -1;
-    private int drumPanelHeight = -1;
-
 
     private final static int DIALOG_TAGS = 11;
     private final static int DIALOG_TEMPO = 22;
@@ -48,16 +39,15 @@ public class Main extends Activity {
 
 
     private boolean mainBananaClicked = false;
-    private boolean drumBananaClicked = false;
 
     private ImageView mainLibenizHead;
 
-    private boolean isLoaded = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN|
@@ -76,6 +66,12 @@ public class Main extends Activity {
 
         Intent intent = getIntent();
         if (intent.hasExtra("bpm")) {
+
+            mJam.setBPM(intent.getFloatExtra("bpm", 120.0f));
+
+            if (intent.hasExtra("started")) {
+                mJam.setStarted(intent.getLongExtra("started", System.currentTimeMillis()));
+            }
 
             libeniz.skip();
 
@@ -176,6 +172,13 @@ public class Main extends Activity {
             }
         });
 
+        findViewById(R.id.saved_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Main.this, SavedListActivity.class));
+            }
+        });
+
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.androidinstrument.drum.SETBPMEXTERNAL");
         filter.addAction("com.androidinstrument.drum.STARTPLAYBACK");
@@ -184,6 +187,22 @@ public class Main extends Activity {
 
     }
 
+    @Override
+    public void onNewIntent(Intent intent) {
+
+        if (intent.hasExtra("beatData")) {
+            if (mJam.loadData(intent.getStringExtra("beatData"))) {
+                updateTempo();
+            }
+            else {
+                Toast.makeText(this,
+                        "Something went wrong loading beat data.", Toast.LENGTH_LONG).show();
+            }
+
+
+        }
+
+    }
 
 
     @Override
@@ -218,15 +237,6 @@ public class Main extends Activity {
             public void onAnimationEnd(Animator animator) {
                 if (!turnOn) {
                     v.setVisibility(View.GONE);
-                }
-                else {
-                    if (collapsedPanelHeight == -1)
-                        collapsedPanelHeight = v.getHeight();
-
-                    if (v == drumControls) {
-                        drumPanelHeight = ((View)drumControls.getParent()).getHeight() - drumControls.getTop() -
-                                drumControls.getPaddingBottom() - collapsedPanelHeight;
-                    }
                 }
             }
 
@@ -360,11 +370,9 @@ public class Main extends Activity {
                                     @Override
                                     public void run() {
                                         showBanana(mainBanana);
+                                        omgHelper.submitWithTags("");
                                     }
                                 });
-
-                                omgHelper.submitWithTags("");
-
                             }
 
                         }
@@ -384,12 +392,6 @@ public class Main extends Activity {
         libeniz.newHeadBobTempo();
     }
 
-
-    public void refreshDrumHeight() {
-
-        drumPanelHeight = ((View)drumControls.getParent()).getHeight() - drumControls.getTop() -
-                drumControls.getPaddingBottom() - collapsedPanelHeight;
-    }
 
     private void showBanana(ImageView view) {
         view.setImageDrawable(getResources().getDrawable(R.drawable.banana48));
@@ -516,4 +518,11 @@ public class Main extends Activity {
         }
     };
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //try {
+            unregisterReceiver(androidInstrumentBroadCastReceiver);
+        //} catch (Exception e) {};
+    }
 }
