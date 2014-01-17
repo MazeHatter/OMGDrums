@@ -103,6 +103,9 @@ public class Main extends Activity {
             @Override
             public void onClick(View view) {
                 mJam.monkeyWithEverything();
+
+                mJam.rewind();
+
                 updateUI(MonadJam.EVERY_RULE_CHANGED);
 
             }

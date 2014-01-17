@@ -392,7 +392,7 @@ public class MonadJam {
 
         if (holdingDrums < now) {
             drumset = rand.nextInt(2);
-
+            setCaptions();
             makeDrumBeats();
         }
         else {
