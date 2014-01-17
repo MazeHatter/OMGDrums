@@ -330,9 +330,10 @@ public class MonadJam {
                 now = System.currentTimeMillis();
 
                 if (shouldRewind) {
-                    nowInLoop = subbeatLength;
+                    nowInLoop = 0;
                     i = 0;
                     shouldRewind = false;
+                    started = now;
                 }
                 else {
                     nowInLoop = now - started;
