@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:background="@drawable/cubes"
+        android:gravity="center_vertical" >
+
+
+    <TextView android:text="@string/sketchatune_level"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="36sp"
+              android:textColor="#FFFFFFFF"
+              android:paddingLeft="20dip"
+              android:paddingRight="20dip"
+              android:layout_marginLeft="30dip"
+            />
+
+
+    <TextView android:text="@string/sketchatune_desc"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="24sp"
+              android:textColor="#FFFFFFFF"
+              android:padding="15dip"
+              android:layout_marginRight="50dip"
+
+            />
+
+
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+            >
+
+        <Button android:drawableTop="@drawable/market114"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Play Store"
+                     android:textSize="20sp"
+                     android:padding="12dip"
+                     android:id="@+id/googleplay_button"
+                />
+
+        <Button android:drawableTop="@drawable/amazon114"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                android:text="Amazon"
+                android:textSize="20sp"
+                android:padding="12dip"
+                android:id="@+id/amazon_button"
+                />
+
+
+    </LinearLayout>
+
+    <TextView android:text="@string/install_drawmusic"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:textSize="18dip"
+              android:textStyle="bold"
+              android:textColor="#FFFFFFFF"
+              android:paddingLeft="20dip"
+              android:paddingRight="20dip"
+              android:gravity="center"
+            />
+
+
+
+</LinearLayout>

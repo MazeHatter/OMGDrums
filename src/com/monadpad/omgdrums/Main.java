@@ -12,10 +12,7 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
@@ -159,7 +156,8 @@ public class Main extends Activity {
             }
         });
 
-        findViewById(R.id.sketchatune).setOnClickListener(new View.OnClickListener() {
+        View sketchatuneButton = findViewById(R.id.sketchatune);
+        sketchatuneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent sketchatuneIntent = getPackageManager().
@@ -170,9 +168,28 @@ public class Main extends Activity {
                     sketchatuneIntent.putExtra("caller", "com.monadpad.omgdrums");
 
                     startActivity(sketchatuneIntent);
+                } else {
+                    startActivity(new Intent(Main.this, GetSketchaTuneActivity.class));
+                }
+
+            }
+        });
+
+        View drawmusicButton = findViewById(R.id.drawmusic);
+        drawmusicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sketchatuneIntent = getPackageManager().
+                        getLaunchIntentForPackage("com.monadpad.le");
+                if (sketchatuneIntent != null) {
+                    sketchatuneIntent.putExtra("bpm", mJam.getBPM());
+                    sketchatuneIntent.putExtra("started", mJam.getStarted());
+                    sketchatuneIntent.putExtra("caller", "com.monadpad.omgdrums");
+
+                    startActivity(sketchatuneIntent);
                 }
                 else {
-                    startActivity(new Intent(Main.this, GetSketchaTuneActivity.class));
+                    startActivity(new Intent(Main.this, GetDrawMusicActivity.class));
                 }
 
             }
@@ -184,6 +201,30 @@ public class Main extends Activity {
                 startActivity(new Intent(Main.this, SavedListActivity.class));
             }
         });
+
+
+        Intent sketchatune = getPackageManager().
+                getLaunchIntentForPackage("com.monadpad.sketchatune2");
+        Intent drawmusic = getPackageManager().
+                getLaunchIntentForPackage("com.monadpad.le");
+
+        //experimenting
+        String installer = getPackageManager().getInstallerPackageName(getPackageName());
+        boolean installedFromAmazon = "com.amazon.venezia".equals(installer);
+        boolean hideSketchatune = sketchatune == null && !installedFromAmazon;
+
+        if (hideSketchatune) {
+            ViewGroup.LayoutParams params = sketchatuneButton.getLayoutParams();
+            params.width = 0;
+            sketchatuneButton.setLayoutParams(params);
+        }
+        if (drawmusic == null && !hideSketchatune) {
+            ViewGroup.LayoutParams params = drawmusicButton.getLayoutParams();
+            params.width = 0;
+            drawmusicButton.setLayoutParams(params);
+        }
+
+
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.androidinstrument.drum.SETBPMEXTERNAL");

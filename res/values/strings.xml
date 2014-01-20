@@ -19,11 +19,13 @@
 
     <string name="tempo_dialog_title">Set Tempo</string>
     <string name="kits_dialog_title">Choose a Drumkit</string>
+
     <string name="sketchatune_level">Take your drum beat to the next level.</string>
     <string name="sketchatune_desc">Add melody,
         harmony, a bassline, and more... by finger painting!
     </string>
     <string name="install_sketchatune">Get Sketch a Tune for FREE!</string>
+    <string name="install_drawmusic">Get Draw Music for FREE!</string>
 
     <string name="saved_list_title">Saved Beats</string>
 </resources>

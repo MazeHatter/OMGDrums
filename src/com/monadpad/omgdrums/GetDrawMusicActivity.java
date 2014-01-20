@@ -13,7 +13,7 @@ import android.view.WindowManager;
  * Date: 1/13/14
  * Time: 1:21 AM
  */
-public class GetSketchaTuneActivity extends Activity {
+public class GetDrawMusicActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class GetSketchaTuneActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-        setContentView(R.layout.getsketchatune);
+        setContentView(R.layout.getdrawmusic);
 
         findViewById(R.id.googleplay_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,13 +36,13 @@ public class GetSketchaTuneActivity extends Activity {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.setData(Uri.parse("market://details?id=com.monadpad.sketchatune2"));
+                    intent.setData(Uri.parse("market://details?id=com.monadpad.le"));
                     startActivity(intent);
 
                 }
                 catch (Exception e) {
                     Intent browser = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://play.google.com/store/apps/details?id=com.monadpad.sketchatune2"));
+                            Uri.parse("https://play.google.com/store/apps/details?id=com.monadpad.le"));
 
                     startActivity(browser);
                 }
@@ -60,12 +60,13 @@ public class GetSketchaTuneActivity extends Activity {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.setData(Uri.parse("amzn://apps/android?p=com.monadpad.sketchatune2"));
+                    intent.setData(Uri.parse("amzn://apps/android?p=com.monadpad.le"));
                     startActivity(intent);
 
                 }
                 catch (Exception e) {
-                    Intent browser = new Intent(Intent.ACTION_VIEW, Uri.parse("http://amzn.com/B00CM1A51Y"));
+                    Intent browser = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://www.amazon.com/MonadPad-com-Draw-Music-MonadPad/dp/B005YTP9W6"));
                     startActivity(browser);
                 }
 
@@ -80,7 +81,6 @@ public class GetSketchaTuneActivity extends Activity {
         else if ("com.android.vending".equals(installer)) {
             findViewById(R.id.amazon_button).setVisibility(View.GONE);
         }
-
 
     }
 
