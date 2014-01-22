@@ -425,7 +425,10 @@ public class MonadJam {
     }
 
     public int getBPM() {
-        return 60000 / (subbeatLength * subbeats);
+        if (subbeatLength > 0)
+            return 60000 / (subbeatLength * subbeats);
+        else
+            return 120;
     }
 
     public void setBPM(float bpm) {

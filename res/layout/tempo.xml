@@ -14,9 +14,9 @@
               android:layout_width="200dip"
               android:layout_toRightOf="@id/cap_bpm"
               android:singleLine="true"
-              android:inputType="textCapWords"
-              android:textSize="24sp"/>
-
+              android:textSize="24sp"
+              android:inputType="number"
+            />
 
     <Button
             android:id="@+id/tap_button"

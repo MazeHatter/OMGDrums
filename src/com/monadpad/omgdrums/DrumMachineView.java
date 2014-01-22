@@ -48,6 +48,10 @@ public class DrumMachineView extends View {
     private int adjustUp = 12;
     private int adjustDown = 18;
 
+    private boolean isLive = false;
+    private int lastX = -1;
+    private int lastY = -1;
+
     public DrumMachineView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -157,13 +161,38 @@ public class DrumMachineView extends View {
 
     public boolean onTouchEvent(MotionEvent event) {
 
+        int boxX = (int)Math.floor(event.getX() / boxWidth);
+        int boxY = (int)Math.floor(event.getY() / boxHeight);
+
+        boxX = Math.min(wide - 1, Math.max(0, boxX));
+        boxY = Math.min(tall - 1, Math.max(0, boxY));
+
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (boxX == 0) {
+                handleFirstColumn(boxY);
+            }
+            else {
+                handleTouch(boxX - 1, boxY);
+                isLive = true;
+            }
+        }
 
-            int boxX = (int)Math.floor(event.getX() / boxWidth);
-            int boxY = (int)Math.floor(event.getY() / boxHeight);
+        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            if (isLive && boxX > 0) {
 
-            handleTouch(boxX, boxY);
+                if (boxX != lastX || boxY != lastY) {
+                    handleTouch(boxX - 1, boxY);
+                }
+            }
+        }
 
+        lastX = boxX;
+        lastY = boxY;
+
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            isLive = false;
+            lastX = -1;
+            lastY = -1;
         }
 
         invalidate();
@@ -171,14 +200,12 @@ public class DrumMachineView extends View {
     }
 
     private void handleTouch(int x, int y) {
-        if (x == 0) {
-            handleFirstColumn(y);
-            return;
-        }
 
-        x--;
         int beatColumns = wide - 1;
-        data[x % beatColumns + y * beatColumns] = !data[x % beatColumns+ y * beatColumns];
+        int i = x % beatColumns + y * beatColumns;
+
+        if (i >= 0 && data.length > i)
+            data[i] = !data[i];
 
     }
 
