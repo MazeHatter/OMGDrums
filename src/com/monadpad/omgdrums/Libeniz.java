@@ -192,7 +192,7 @@ public class Libeniz {
         }
         step = 6;
         showBanana();
-        say(4000, "Press the Banana to Save", false, new Runnable() {
+        say(4000, "Press the OMG to Save", false, new Runnable() {
             @Override
             public void run() {
                 step7();

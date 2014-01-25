@@ -395,7 +395,7 @@ public class Main extends Activity {
                 if (mainBananaClicked) {
                     mainBananaClicked = false;
 
-                    mainBanana.setImageDrawable(getResources().getDrawable(R.drawable.banana48));
+                    mainBanana.setImageDrawable(getResources().getDrawable(R.drawable.omg48));
 
                     showDialog(11);
 
@@ -451,7 +451,7 @@ public class Main extends Activity {
 
 
     private void showBanana(ImageView view) {
-        view.setImageDrawable(getResources().getDrawable(R.drawable.banana48));
+        view.setImageDrawable(getResources().getDrawable(R.drawable.omg48));
 
         Animation turnin = AnimationUtils.loadAnimation(this, R.anim.rotate);
         view.startAnimation(turnin);

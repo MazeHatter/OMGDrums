@@ -107,6 +107,8 @@ public class MonadJam {
 
     private long mutedTime = 0;
 
+    private String[][] presetNames;
+
     public MonadJam(Context context) {
 
         mContext = context;
@@ -155,6 +157,16 @@ public class MonadJam {
         soundIds[1][4] = pool.load(mContext, R.raw.rock_hihat_open, 1);
         soundIds[1][5] = pool.load(mContext, R.raw.rock_crash, 1);
 
+        presetNames = new String[][] {
+                {"PRESET_HH_KICK", "PRESET_ROCK_KIT"},
+                {"PRESET_HH_CLAP", "PRESET_ROCK_SNARE"},
+                {"PRESET_ROCK_HIHAT_CLOSED", "PRESET_ROCK_HIHAT_CLOSED"},
+                {"PRESET_HH_HIHAT", "PRESET_ROCK_HIHAT_MED"},
+                {"PRESET_HH_TAMB", "PRESET_ROCK_HIHAT_OPEN"},
+                {"PRESET_HH_SCRATCH", "PRESET_ROCK_CRASH"},
+                {"", ""},
+                {"", ""}
+        };
 
     }
 
@@ -465,7 +477,10 @@ public class MonadJam {
         for (int p = 0; p < pattern.length; p++) {
             sb.append("{\"name\": \"");
             sb.append(captions[p]);
-            sb.append("\", \"sound\": \"PRESET_HH_KICK\", \"data\": [");
+            sb.append("\", \"sound\": \"");
+            //sb.append(presetNames[p][drumset]);
+            sb.append("PRESET_HH_KICK");
+            sb.append("\", \"data\": [");
             for (int i = 0; i < totalBeats; i++) {
                 sb.append(pattern[p][i] ?1:0) ;
                 if (i < totalBeats - 1)
