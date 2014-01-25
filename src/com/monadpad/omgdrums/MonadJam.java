@@ -478,8 +478,7 @@ public class MonadJam {
             sb.append("{\"name\": \"");
             sb.append(captions[p]);
             sb.append("\", \"sound\": \"");
-            //sb.append(presetNames[p][drumset]);
-            sb.append("PRESET_HH_KICK");
+            sb.append(presetNames[p][drumset]);
             sb.append("\", \"data\": [");
             for (int i = 0; i < totalBeats; i++) {
                 sb.append(pattern[p][i] ?1:0) ;
