@@ -158,7 +158,7 @@ public class MonadJam {
         soundIds[1][5] = pool.load(mContext, R.raw.rock_crash, 1);
 
         presetNames = new String[][] {
-                {"PRESET_HH_KICK", "PRESET_ROCK_KIT"},
+                {"PRESET_HH_KICK", "PRESET_ROCK_KICK"},
                 {"PRESET_HH_CLAP", "PRESET_ROCK_SNARE"},
                 {"PRESET_ROCK_HIHAT_CLOSED", "PRESET_ROCK_HIHAT_CLOSED"},
                 {"PRESET_HH_HIHAT", "PRESET_ROCK_HIHAT_MED"},
