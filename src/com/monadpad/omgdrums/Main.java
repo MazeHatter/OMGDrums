@@ -24,7 +24,7 @@ public class Main extends Activity {
     DrumMachineView drumMachine;
 
 
-    private Libeniz libeniz;
+//    private Libeniz libeniz;
 
     private final static int DIALOG_TAGS = 11;
     private final static int DIALOG_TEMPO = 22;
@@ -42,6 +42,12 @@ public class Main extends Activity {
     private boolean mIsVisible = false;
 
     private boolean turnedHeadBobOff = false;
+
+    private HeadBob headbob;
+
+    private boolean loaded = false;
+
+    private boolean modified = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +68,10 @@ public class Main extends Activity {
         drumMachine = (DrumMachineView)findViewById(R.id.drum_machine);
         drumMachine.setJam(mJam);
 
-        libeniz = new Libeniz(this, mJam);
+        //      libeniz = new Libeniz(this, mJam);
+
+
+        loadFirstJam();
 
         Intent intent = getIntent();
         if (intent.hasExtra("bpm")) {
@@ -73,27 +82,16 @@ public class Main extends Activity {
                 mJam.setStarted(intent.getLongExtra("started", System.currentTimeMillis()));
             }
 
-            libeniz.skip();
+    //        libeniz.skip(false);
 
         }
         else {
-            libeniz.letsMakeASong();
+    //        libeniz.letsMakeASong();
         }
 
-        findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                libeniz.skip();
-                fadePanel(view, false);
-            }
-        });
+        mJam.makeChannels();
+        drumMachine.handleFirstColumn(0);
 
-        findViewById(R.id.bpm_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog(DIALOG_TEMPO);
-            }
-        });
 
         mainLibenizHead = (ImageView)findViewById(R.id.libeniz_head);
         mainLibenizHead.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +105,26 @@ public class Main extends Activity {
 
             }
         });
+
+        headbob = new HeadBob(mainLibenizHead);
+        headbob.start(500);
+
+
+        findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+    //            libeniz.skip(true);
+                fadePanel(view, false);
+            }
+        });
+
+        findViewById(R.id.bpm_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog(DIALOG_TEMPO);
+            }
+        });
+
 
         updateTempo();
 
@@ -232,6 +250,9 @@ public class Main extends Activity {
         filter.addAction("com.androidinstrument.drum.STOPPLAYBACK");
         registerReceiver(androidInstrumentBroadCastReceiver, filter);
 
+        if (Build.VERSION.SDK_INT < 11)
+            findViewById(R.id.auto_status).getBackground().setAlpha(0);
+
     }
 
     @Override
@@ -263,7 +284,11 @@ public class Main extends Activity {
                         // otherwise it'll shut off
 
 
-        libeniz.finish();
+    //    libeniz.finish();
+
+        if (headbob != null)
+            headbob.finish();
+
         turnedHeadBobOff = true;
 
         if (isFinishing()) {
@@ -344,7 +369,8 @@ public class Main extends Activity {
 
                     removeDialog(DIALOG_TAGS);
 
-                    omgHelper.submitWithTags(tags);
+                    omgHelper.submitWithTags(tags, modified);
+                    modified = false;
                 }
             });
             return dl;
@@ -395,7 +421,7 @@ public class Main extends Activity {
                 if (mainBananaClicked) {
                     mainBananaClicked = false;
 
-                    mainBanana.setImageDrawable(getResources().getDrawable(R.drawable.omg48));
+                    mainBanana.setImageDrawable(getResources().getDrawable(R.drawable.omg128));
 
                     showDialog(11);
 
@@ -427,7 +453,9 @@ public class Main extends Activity {
                                     @Override
                                     public void run() {
                                         showBanana(mainBanana);
-                                        omgHelper.submitWithTags("");
+                                        omgHelper.submitWithTags("", modified);
+                                        modified = false;
+
                                     }
                                 });
                             }
@@ -446,12 +474,13 @@ public class Main extends Activity {
         //int beatMS = mJam.getBPM();
         //int bpm = 60000 / beatMS;
         ((TextView)findViewById(R.id.bpm_button)).setText(Integer.toString(mJam.getBPM()) + " bpm");
-        libeniz.newHeadBobTempo();
+        newHeadBobTempo();
+    //    libeniz.newHeadBobTempo();
     }
 
 
     private void showBanana(ImageView view) {
-        view.setImageDrawable(getResources().getDrawable(R.drawable.omg48));
+        view.setImageDrawable(getResources().getDrawable(R.drawable.omg128));
 
         Animation turnin = AnimationUtils.loadAnimation(this, R.anim.rotate);
         view.startAnimation(turnin);
@@ -599,9 +628,67 @@ public class Main extends Activity {
             updateTempo();
             turnedHeadBobOff = false;
         }
+
+        if (!loaded) {
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                        mJam.kickIt();
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new Libeniz(Main.this).showInstructions();
+                            }
+                        });
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+            loaded = true;
+        }
     }
 
     public boolean isVisible() {
         return mIsVisible;
+    }
+
+    public void skipDemo() {
+    //    if (libeniz != null)
+    //        libeniz.skip(false);
+    }
+
+    public void newHeadBobTempo() {
+
+        if (headbob != null)
+            headbob.start(mJam.getBeatLength());
+
+    }
+
+    public void loadFirstJam() {
+
+        SavedDataOpenHelper dataHelper = new SavedDataOpenHelper(this);
+        String lastJam = dataHelper.getLastSaved();
+
+        if (lastJam.length() > 0) {
+            mJam.loadData(lastJam);
+            updateTempo();
+            drumMachine.setCaptions();
+
+            Toast.makeText(this, "Loaded last saved beats.", Toast.LENGTH_LONG).show();
+        }
+        else {
+            mJam.loadDefaultJam();
+        }
+
+    }
+
+    public void onModify() {
+
+        modified = true;
     }
 }

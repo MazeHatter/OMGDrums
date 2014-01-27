@@ -21,7 +21,7 @@ public class HeadBob {
 
         mView = view;
 
-        bobHeight = mView.getHeight() / 4;
+        bobHeight = 12; //mView.getHeight() / 4;
         layoutParams = (ViewGroup.MarginLayoutParams)mView.getLayoutParams();
 
         if (Build.VERSION.SDK_INT >= 11) {

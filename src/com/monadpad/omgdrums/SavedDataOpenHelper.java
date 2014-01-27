@@ -62,4 +62,15 @@ public class SavedDataOpenHelper extends SQLiteOpenHelper {
 
     }
 
+    public String getLastSaved() {
+        String ret = "";
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM saves ORDER BY time DESC LIMIT 1", null);
+        if (cursor.getCount() == 1) {
+            cursor.moveToFirst();
+            ret = cursor.getString(cursor.getColumnIndex("data"));
+        }
+        return ret;
+    }
+
 }

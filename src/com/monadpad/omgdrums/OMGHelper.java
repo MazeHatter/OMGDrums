@@ -32,7 +32,7 @@ public class OMGHelper {
 
     }
 
-    public void submitWithTags(String tags) {
+    public void submitWithTags(String tags, boolean upload) {
 
         ContentValues data = new ContentValues();
         data.put("tags", tags);
@@ -43,7 +43,8 @@ public class OMGHelper {
         db.insert("saves", null, data);
         db.close();
 
-        new SaveToOMG().execute(mHomeUrl + mSubmitUrl, mType.toString(), tags, mData);
+        if (upload)
+            new SaveToOMG().execute(mHomeUrl + mSubmitUrl, mType.toString(), tags, mData);
 
     }
 

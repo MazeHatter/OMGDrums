@@ -26,6 +26,7 @@
                 android:text="Skip >>"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:visibility="gone"
                 >
 <!--            android:padding="10dip"-->
 
@@ -37,9 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Here's stuff"
-            android:layout_toRightOf="@id/libeniz_head"
-            android:layout_centerVertical="true"
-                android:layout_marginLeft="10dip"
+            android:layout_centerHorizontal="true"
+
                 android:background="@drawable/statusbox"
                 android:padding="8dip"
                 android:textColor="#000000"
@@ -52,17 +52,11 @@
 
         <ImageView
                 android:id="@+id/main_banana"
-            android:alpha="0"
             android:src="@drawable/omg128"
             android:layout_width="48dip"
             android:layout_height="48dip"
             android:layout_alignParentRight="true"
-            android:visibility="invisible"
                />
-
-    <!-- android:visibility="gone"  </RelativeLayout>-->
-
-
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
@@ -109,40 +103,16 @@
     </RelativeLayout>
 
 
-
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/back"
-                    android:padding="5dip"
-                    android:layout_margin="2dip"
-                    android:id="@+id/drums"
-                    android:layout_below="@id/song_controls"
-                    >
-
-
-
-        <com.monadpad.omgdrums.DrumMachineView
-                android:layout_below="@id/mute_button"
-                android:layout_alignParentLeft="true"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/drum_machine"
-                />
-
-    </FrameLayout>
-
-
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/back"
-                    android:layout_below="@id/drums"
                     android:padding="5dip"
                     android:layout_margin="2dip"
                     android:id="@+id/bottom_panel"
-
+                    android:layout_alignParentBottom="true"
             >
+
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Saved"
@@ -173,6 +143,30 @@
 
     </RelativeLayout>
 
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:background="@drawable/back"
+                 android:padding="5dip"
+                 android:layout_margin="2dip"
+                 android:id="@+id/drums"
+                 android:layout_below="@id/song_controls"
+                 android:layout_above="@id/bottom_panel"
+            >
+
+
+
+        <com.monadpad.omgdrums.DrumMachineView
+                android:layout_below="@id/mute_button"
+
+                android:layout_alignParentLeft="true"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/drum_machine"
+                />
+
+    </FrameLayout>
 
 
 </RelativeLayout>

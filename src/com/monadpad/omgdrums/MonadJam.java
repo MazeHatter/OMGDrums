@@ -319,7 +319,7 @@ public class MonadJam {
         int lastI;
 
         public void run() {
-
+            Log.d("MGH starting thread", Integer.toString(subbeatLength));
             onNewLoop();
 
             long now;
@@ -612,6 +612,8 @@ public class MonadJam {
             e.printStackTrace();
         }
 
+        setCaptions();
+
         return good;
     }
 
@@ -627,5 +629,16 @@ public class MonadJam {
             playing = true;
 
         }
+    }
+
+    public boolean isDemoMode() {
+        return demo;
+    }
+
+    public void loadDefaultJam() {
+        makeKickBeats(true);
+        makeClapBeats(true);
+        makeHiHatBeats(true);
+        makeHiHat2Beats(true);
     }
 }

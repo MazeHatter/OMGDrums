@@ -22,25 +22,23 @@ public final class R {
         public static final int drawmusic=0x7f020005;
         public static final int drum=0x7f020006;
         public static final int icon48=0x7f020007;
-        public static final int icon48x=0x7f020008;
-        public static final int market114=0x7f020009;
-        public static final int omg128=0x7f02000a;
-        public static final int omg48=0x7f02000b;
-        public static final int rewind=0x7f02000c;
-        public static final int statusbox=0x7f02000d;
-        public static final int supericon100=0x7f02000e;
+        public static final int market114=0x7f020008;
+        public static final int omg128=0x7f020009;
+        public static final int rewind=0x7f02000a;
+        public static final int statusbox=0x7f02000b;
+        public static final int supericon100=0x7f02000c;
     }
     public static final class id {
         public static final int amazon_button=0x7f080001;
         public static final int auto_status=0x7f08000c;
-        public static final int bottom_panel=0x7f080015;
+        public static final int bottom_panel=0x7f080013;
         public static final int bpm_button=0x7f080012;
         public static final int cancel_button=0x7f080008;
         public static final int capSong=0x7f080002;
         public static final int cap_bpm=0x7f08001b;
-        public static final int drawmusic=0x7f080018;
-        public static final int drum_machine=0x7f080014;
-        public static final int drums=0x7f080013;
+        public static final int drawmusic=0x7f080016;
+        public static final int drum_machine=0x7f080018;
+        public static final int drums=0x7f080017;
         public static final int googleplay_button=0x7f080000;
         public static final int hip_button=0x7f080006;
         public static final int kit_button=0x7f080011;
@@ -51,10 +49,10 @@ public final class R {
         public static final int ok_button=0x7f080005;
         public static final int rewind_button=0x7f080010;
         public static final int rock_button=0x7f080007;
-        public static final int saved_button=0x7f080016;
+        public static final int saved_button=0x7f080014;
         public static final int saved_data_date=0x7f08001a;
         public static final int saved_data_tags=0x7f080019;
-        public static final int sketchatune=0x7f080017;
+        public static final int sketchatune=0x7f080015;
         public static final int skip=0x7f08000b;
         public static final int song_controls=0x7f08000e;
         public static final int tap_button=0x7f08001d;

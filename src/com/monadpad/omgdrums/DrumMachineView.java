@@ -52,6 +52,8 @@ public class DrumMachineView extends View {
     private int lastX = -1;
     private int lastY = -1;
 
+    private boolean hasChanged = false;
+
     public DrumMachineView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -168,6 +170,7 @@ public class DrumMachineView extends View {
         boxY = Math.min(tall - 1, Math.max(0, boxY));
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
             if (boxX == 0) {
                 handleFirstColumn(boxY);
             }
@@ -200,6 +203,8 @@ public class DrumMachineView extends View {
     }
 
     private void handleTouch(int x, int y) {
+
+        ((Main)getContext()).onModify();
 
         int beatColumns = wide - 1;
         int i = x % beatColumns + y * beatColumns;
