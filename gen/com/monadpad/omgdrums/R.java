@@ -18,47 +18,49 @@ public final class R {
         public static final int add_tag_white=0x7f020001;
         public static final int amazon114=0x7f020002;
         public static final int back=0x7f020003;
-        public static final int cubes=0x7f020004;
-        public static final int drawmusic=0x7f020005;
-        public static final int drum=0x7f020006;
-        public static final int icon48=0x7f020007;
-        public static final int market114=0x7f020008;
-        public static final int omg128=0x7f020009;
-        public static final int rewind=0x7f02000a;
-        public static final int statusbox=0x7f02000b;
-        public static final int supericon100=0x7f02000c;
+        public static final int bitar=0x7f020004;
+        public static final int cubes=0x7f020005;
+        public static final int drawmusic=0x7f020006;
+        public static final int drum=0x7f020007;
+        public static final int icon48=0x7f020008;
+        public static final int market114=0x7f020009;
+        public static final int omg128=0x7f02000a;
+        public static final int rewind=0x7f02000b;
+        public static final int statusbox=0x7f02000c;
+        public static final int supericon100=0x7f02000d;
     }
     public static final class id {
-        public static final int amazon_button=0x7f080001;
-        public static final int auto_status=0x7f08000c;
-        public static final int bottom_panel=0x7f080013;
-        public static final int bpm_button=0x7f080012;
-        public static final int cancel_button=0x7f080008;
-        public static final int capSong=0x7f080002;
-        public static final int cap_bpm=0x7f08001b;
-        public static final int drawmusic=0x7f080016;
-        public static final int drum_machine=0x7f080018;
-        public static final int drums=0x7f080017;
-        public static final int googleplay_button=0x7f080000;
-        public static final int hip_button=0x7f080006;
-        public static final int kit_button=0x7f080011;
-        public static final int libeniz_head=0x7f08000a;
-        public static final int main_banana=0x7f08000d;
-        public static final int main_layout=0x7f080009;
-        public static final int mute_button=0x7f08000f;
-        public static final int ok_button=0x7f080005;
-        public static final int rewind_button=0x7f080010;
-        public static final int rock_button=0x7f080007;
-        public static final int saved_button=0x7f080014;
-        public static final int saved_data_date=0x7f08001a;
-        public static final int saved_data_tags=0x7f080019;
-        public static final int sketchatune=0x7f080015;
-        public static final int skip=0x7f08000b;
-        public static final int song_controls=0x7f08000e;
-        public static final int tap_button=0x7f08001d;
-        public static final int txt_bpm=0x7f08001c;
-        public static final int txt_tags=0x7f080003;
-        public static final int why_button=0x7f080004;
+        public static final int amazon_button=0x7f090001;
+        public static final int auto_status=0x7f09000c;
+        public static final int bitar=0x7f090017;
+        public static final int bottom_panel=0x7f090013;
+        public static final int bpm_button=0x7f090012;
+        public static final int cancel_button=0x7f090008;
+        public static final int capSong=0x7f090002;
+        public static final int cap_bpm=0x7f09001c;
+        public static final int drawmusic=0x7f090016;
+        public static final int drum_machine=0x7f090019;
+        public static final int drums=0x7f090018;
+        public static final int googleplay_button=0x7f090000;
+        public static final int hip_button=0x7f090006;
+        public static final int kit_button=0x7f090011;
+        public static final int libeniz_head=0x7f09000a;
+        public static final int main_banana=0x7f09000d;
+        public static final int main_layout=0x7f090009;
+        public static final int mute_button=0x7f09000f;
+        public static final int ok_button=0x7f090005;
+        public static final int rewind_button=0x7f090010;
+        public static final int rock_button=0x7f090007;
+        public static final int saved_button=0x7f090014;
+        public static final int saved_data_date=0x7f09001b;
+        public static final int saved_data_tags=0x7f09001a;
+        public static final int sketchatune=0x7f090015;
+        public static final int skip=0x7f09000b;
+        public static final int song_controls=0x7f09000e;
+        public static final int tap_button=0x7f09001e;
+        public static final int txt_bpm=0x7f09001d;
+        public static final int txt_tags=0x7f090003;
+        public static final int why_button=0x7f090004;
     }
     public static final class layout {
         public static final int getdrawmusic=0x7f030000;
@@ -70,7 +72,7 @@ public final class R {
         public static final int tempo=0x7f030006;
     }
     public static final class menu {
-        public static final int kits=0x7f070000;
+        public static final int kits=0x7f080000;
     }
     public static final class raw {
         public static final int hh_clap=0x7f050000;
@@ -103,5 +105,8 @@ public final class R {
         public static final int tags_hint=0x7f060004;
         public static final int tap_tempo=0x7f060009;
         public static final int tempo_dialog_title=0x7f06000a;
+    }
+    public static final class style {
+        public static final int AppTheme=0x7f070000;
     }
 }

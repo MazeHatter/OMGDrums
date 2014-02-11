@@ -134,12 +134,25 @@
 
                 />
 
+        <!--<ImageButton android:layout_width="48dip"
+                     android:layout_height="48dip"
+                     android:src="@drawable/"
+                     android:layout_toLeftOf="@id/sketchatune"
+                     android:id="@+id/drawmusic"
+
+                />-->
+        <ImageButton android:src="@drawable/bitar"
+                android:layout_width="48dip"
+                android:layout_height="48dip"
+                android:id="@+id/bitar"
+                android:layout_toLeftOf="@id/drawmusic"/>
+
 
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="Melody:"
                   android:layout_centerVertical="true"
-                  android:layout_toLeftOf="@id/drawmusic"/>
+                  android:layout_toLeftOf="@id/bitar"/>
 
     </RelativeLayout>
 

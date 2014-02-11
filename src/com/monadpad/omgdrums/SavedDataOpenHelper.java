@@ -70,6 +70,7 @@ public class SavedDataOpenHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
             ret = cursor.getString(cursor.getColumnIndex("data"));
         }
+        cursor.close();
         return ret;
     }
 

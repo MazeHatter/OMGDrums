@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -99,7 +98,6 @@ public class DrumMachineView extends View {
             boxWidth = width / wide;
             boxHeight = height / tall;
 
-            Log.d("MGH boxsize", Integer.toString(boxHeight));
             if (boxHeight < 90) {
                 blackPaint.setTextSize(12);
                 adjustUp = 6;

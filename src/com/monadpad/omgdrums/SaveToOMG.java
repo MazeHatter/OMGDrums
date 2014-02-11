@@ -1,7 +1,6 @@
 package com.monadpad.omgdrums;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
@@ -34,7 +33,7 @@ public class SaveToOMG {
     private boolean doHttp(String saveUrl, String type, String tags, String data) {
         boolean saved = false;
         HttpClient httpclientup = new DefaultHttpClient();
-        Log.d("MGH doHttp", "1");
+
         try {
             HttpPost hPost = new HttpPost(saveUrl);
             List<NameValuePair> postParams = new ArrayList<NameValuePair>();
@@ -50,7 +49,6 @@ public class SaveToOMG {
                 response.getEntity().writeTo(out);
                 out.close();
                 responseString = out.toString();
-                Log.d("MGH doHttp", responseString);
                 if (!responseString.equals("bad")){
                     saved = true;
                 }   else{
@@ -64,7 +62,6 @@ public class SaveToOMG {
         } catch (IOException ee) {
             desc = ee.getMessage();
         }
-        Log.d("MGH doHttp saved?", desc);
         return saved;
 
     }

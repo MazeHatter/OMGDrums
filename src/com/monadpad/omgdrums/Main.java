@@ -213,6 +213,27 @@ public class Main extends Activity {
             }
         });
 
+        View bitarButton = findViewById(R.id.bitar);
+        bitarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sketchatuneIntent = getPackageManager().
+                        getLaunchIntentForPackage("com.monadpad.ax");
+                if (sketchatuneIntent != null) {
+                    sketchatuneIntent.putExtra("duration", mJam.getDuration());
+                    sketchatuneIntent.putExtra("started", mJam.getStarted());
+                    sketchatuneIntent.putExtra("caller", "com.monadpad.omgdrums");
+
+                    startActivity(sketchatuneIntent);
+                }
+                else {
+                    startActivity(new Intent(Main.this, GetDrawMusicActivity.class));
+                }
+
+            }
+        });
+
+
         findViewById(R.id.saved_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -240,6 +261,14 @@ public class Main extends Activity {
             ViewGroup.LayoutParams params = drawmusicButton.getLayoutParams();
             params.width = 0;
             drawmusicButton.setLayoutParams(params);
+        }
+
+        Intent bitarIntent = getPackageManager().
+                getLaunchIntentForPackage("com.monadpad.ax");
+        if (bitarIntent == null) {
+            ViewGroup.LayoutParams params = bitarButton.getLayoutParams();
+            params.width = 0;
+            bitarButton.setLayoutParams(params);
         }
 
 
@@ -526,12 +555,15 @@ public class Main extends Activity {
         dl.findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                mJam.setSubbeatLength((int)(60000.0f / Integer.parseInt(txt.getText().toString()) / 4));
-                removeDialog(DIALOG_TEMPO);
-                updateUI(0);
+                try {
+                    mJam.setSubbeatLength((int)(60000.0f / Integer.parseInt(txt.getText().toString()) / 4));
+                    removeDialog(DIALOG_TEMPO);
+                    updateUI(0);
+                }
+                catch (NumberFormatException e) {
+                    Toast.makeText(Main.this, "Not a valid number", Toast.LENGTH_LONG).show();
+                }
 
-//                    String tags = ((EditText) dl.findViewById(R.id.txt_tags)).getText().toString();
-//                    omgHelper.submitWithTags(tags);
             }
         });
         return dl;

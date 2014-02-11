@@ -2,7 +2,6 @@ package com.monadpad.omgdrums;
 
 import android.animation.ObjectAnimator;
 import android.os.Build;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,7 +32,6 @@ public class HeadBob {
 
 
     public void start(int beatMS) {
-        Log.d("MGH", "headbob starting");
 
         if (anim != null) {
             anim.setRepeatCount(-1);

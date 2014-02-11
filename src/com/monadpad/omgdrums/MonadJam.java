@@ -4,7 +4,6 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
-import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -127,11 +126,9 @@ public class MonadJam {
                 @Override
                 public void onLoadComplete(SoundPool soundPool, int i, int i1) {
                     loadedSounds++;
-                    Log.d("MGH sound pool", Integer.toString(loadedSounds));
 
                     if (loadedSounds == 70) {
                         soundPoolLoaded = true;
-                        Log.d("MGH sound pool", "loaded");
                     }
                 }
             });
@@ -319,7 +316,6 @@ public class MonadJam {
         int lastI;
 
         public void run() {
-            Log.d("MGH starting thread", Integer.toString(subbeatLength));
             onNewLoop();
 
             long now;
@@ -417,7 +413,8 @@ public class MonadJam {
         }
 
 
-        playbackThread.i = 0;
+        if (playbackThread != null)
+            playbackThread.i = 0;
 
         unmute();
     }
@@ -580,7 +577,6 @@ public class MonadJam {
     }
 
     public boolean loadData(String data) {
-        Log.d("MGH loadData", data);
 
         boolean good = false;
         try {
@@ -640,5 +636,9 @@ public class MonadJam {
         makeClapBeats(true);
         makeHiHatBeats(true);
         makeHiHat2Beats(true);
+    }
+
+    public long getDuration() {
+        return subbeatLength * subbeats * beats;
     }
 }
